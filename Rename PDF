@@ -1,0 +1,35 @@
+import pandas as pd
+import os
+
+# Load the Excel file
+excel_file_path = r'C:\\Users\\richardp\\Downloads\\Sample\\FL Apartment - 100221 (1).xlsx'
+print(f"Excel file path: {excel_file_path}")
+
+# Check if the Excel file exists
+if not os.path.exists(excel_file_path):
+    print(f"Excel file not found: {excel_file_path}")
+else:
+    df = pd.read_excel(excel_file_path)
+
+    # Specify the directory containing the PDF files
+    pdf_directory = r'C:\\Users\\richardp\\Downloads\\FL'
+    print(f"PDF directory path: {pdf_directory}")
+
+    # Loop through each row in the DataFrame and rename the PDF files
+    for index, row in df.iterrows():
+        current_name = row['CurrentName']
+        new_name = row['NewName']
+        current_file_path = os.path.join(pdf_directory, f"{current_name}.pdf")
+        new_file_path = os.path.join(pdf_directory, f"{new_name}.pdf")
+
+        print(f"Current file path: {current_file_path}")
+        print(f"New file path: {new_file_path}")
+
+        # Check if the current file exists before renaming
+        if os.path.exists(current_file_path):
+            os.rename(current_file_path, new_file_path)
+            print(f"Renamed: {current_file_path} to {new_file_path}")
+        else:
+            print(f"File not found: {current_file_path}")
+
+    print("Renaming process completed.")
